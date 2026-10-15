@@ -1,0 +1,340 @@
+/* ============================================================
+   SISTEMA DE DISEÑO TELEGRAM NATIVO
+   Se adapta automáticamente al tema Claro / Oscuro del cliente
+============================================================ */
+:root {
+  --bg-color: var(--tg-theme-bg-color, #ffffff);
+  --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f7);
+  --text-color: var(--tg-theme-text-color, #1a1a1a);
+  --hint-color: var(--tg-theme-hint-color, #8e8e93);
+  --link-color: var(--tg-theme-link-color, #2481cc);
+  --btn-color: var(--tg-theme-button-color, #2481cc);
+  --btn-text-color: var(--tg-theme-button-text-color, #ffffff);
+  --section-bg: var(--tg-theme-section-bg-color, #ffffff);
+  
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  --border-radius-m: 12px;
+  --border-radius-l: 16px;
+  --transition-speed: 0.2s ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  min-height: 100vh;
+  /* Compatible con el notch y gestos de iOS/Android */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+  overflow-x: hidden;
+}
+
+.app-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ============================================================
+   HEADER & GLASSMORPHISM
+============================================================ */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(var(--secondary-bg), 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 12px 0 8px 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.badge-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--btn-color);
+  background: rgba(36, 129, 204, 0.12);
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.greeting-box h1 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.header-icon {
+  position: relative;
+  font-size: 1.5rem;
+  padding: 8px;
+}
+
+.badge-count {
+  position: absolute;
+  top: 4px;
+  right: 0px;
+  background-color: #ef4444;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--secondary-bg);
+}
+
+/* ============================================================
+   SEARCH & FILTROS
+============================================================ */
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius-m);
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  margin-bottom: 12px;
+}
+
+.search-icon {
+  margin-right: 8px;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  outline: none;
+}
+
+.search-box input::placeholder {
+  color: var(--hint-color);
+}
+
+.categories-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 6px;
+}
+
+.categories-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  background-color: var(--bg-color);
+  color: var(--hint-color);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.chip.active {
+  background-color: var(--btn-color);
+  color: var(--btn-text-color);
+  box-shadow: 0 3px 8px rgba(36, 129, 204, 0.25);
+}
+
+/* ============================================================
+   GRID DE PRODUCTOS
+============================================================ */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Si la pantalla es más ancha (Tablets, Telegram Desktop o PC) */
+@media (min-width: 500px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background-color: var(--section-bg);
+  border-radius: var(--border-radius-l);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform var(--transition-speed);
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.card-img-placeholder {
+  width: 100%;
+  height: 120px;
+  border-radius: var(--border-radius-m);
+  background: linear-gradient(135deg, rgba(36,129,204,0.1), rgba(36,129,204,0.03));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.card-desc {
+  font-size: 0.82rem;
+  color: var(--hint-color);
+  margin-bottom: 12px;
+  min-height: 32px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-color);
+}
+
+/* Controles de Cantidad (+ / -) */
+.counter-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary-bg);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 6px;
+}
+
+.btn-step {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.btn-step:active {
+  background-color: var(--btn-color);
+  color: var(--btn-text-color);
+}
+
+.qty-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ============================================================
+   ESTADO VACÍO
+============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--hint-color);
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   FALLBACK CHECKOUT (Fuera de Telegram)
+============================================================ */
+.floating-checkout {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-color);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)) 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  z-index: 100;
+  transform: translateY(120%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-checkout.visible {
+  transform: translateY(0%);
+}
+
+.checkout-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--hint-color);
+}
+
+#standaloneTotal {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--btn-color);
+}
+
+.btn-checkout {
+  background-color: var(--btn-color);
+  color: var(--btn-text-color);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius-m);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
