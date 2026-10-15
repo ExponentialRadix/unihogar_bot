@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Bazar Mini App</title>
+  
+  <!-- SDK Oficial de Telegram -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Encabezado con efecto Blur (Glassmorphism) -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="greeting-box">
+          <span class="badge-status">Bazar Online</span>
+          <h1 id="userGreeting">¡Bienvenido! 👋</h1>
+        </div>
+        <div class="header-icon" id="cartBadgeContainer">
+          🛒 <span id="cartCountBadge" class="badge-count">0</span>
+        </div>
+      </div>
+
+      <!-- Buscador dinámico -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar producto o categoría...">
+      </div>
+
+      <!-- Filtros por Chips / Píldoras -->
+      <nav class="categories-nav" id="categoriesNav">
+        <button class="chip active" data-cat="all">Todos</button>
+        <button class="chip" data-cat="ropa">Ropa</button>
+        <button class="chip" data-cat="hogar">Hogar</button>
+        <button class="chip" data-cat="accesorios">Accesorios</button>
+      </nav>
+    </header>
+
+    <!-- Listado de Productos -->
+    <main class="catalog-grid" id="catalogGrid">
+      <!-- Inyectado por JavaScript -->
+    </main>
+
+    <!-- Estado vacío si no hay coincidencias -->
+    <div id="emptyState" class="empty-state hidden">
+      <div class="empty-icon">🔎</div>
+      <h3>No encontramos resultados</h3>
+      <p>Prueba con otra palabra clave o cambia de categoría.</p>
+    </div>
+
+    <!-- Barra inferior flotante (Actúa como fallback si se abre fuera de Telegram) -->
+    <aside class="floating-checkout" id="standaloneCheckoutBar">
+      <div class="checkout-info">
+        <span class="checkout-label">Total del pedido:</span>
+        <strong id="standaloneTotal">0.00 €</strong>
+      </div>
+      <button class="btn-checkout" id="btnStandalonePay">
+        Completar Pedido 🛍️
+      </button>
+    </aside>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
