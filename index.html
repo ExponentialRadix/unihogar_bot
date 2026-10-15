@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Bazar Bot - Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Encabezado con información del usuario -->
+    <header class="app-header">
+      <div class="user-info">
+        <span class="user-badge" id="roleBadge">Cliente</span>
+        <h1 id="userGreeting">Bazar Bot</h1>
+      </div>
+      <div class="cart-chip" id="cartChip">
+        🛒 <span id="cartCount">0</span>
+      </div>
+    </header>
+
+    <!-- Barra de navegación por pestañas (Estilo iOS / Telegram) -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="catalog">📦 Catálogo</button>
+      <button class="tab-btn" data-tab="stats">📊 Estadísticas</button>
+      <button class="tab-btn admin-only hidden" id="tabAdminBtn" data-tab="admin">➕ Añadir</button>
+    </nav>
+
+    <!-- PESTAÑA 1: CATÁLOGO REAL -->
+    <section id="tab-catalog" class="tab-content active">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar en el inventario real...">
+      </div>
+
+      <div class="product-list" id="productList">
+        <!-- Renderizado dinámico desde SQLite -->
+      </div>
+
+      <div id="emptyCatalog" class="empty-state hidden">
+        <div class="empty-icon">📭</div>
+        <p>No hay artículos registrados en el catálogo.</p>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 2: ESTADÍSTICAS REALES -->
+    <section id="tab-stats" class="tab-content">
+      <div class="stats-card">
+        <h3>Resumen del Inventario</h3>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-num" id="statTotalItems">0</span>
+            <span class="stat-label">Artículos</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="statTotalValue">0.00 €</span>
+            <span class="stat-label">Valor Total</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-box">
+        💡 <b>Sincronización en vivo:</b> Estos datos proceden directamente de la base de datos SQLite del servidor.
+      </div>
+    </section>
+
+    <!-- PESTAÑA 3: AÑADIR PRODUCTO (Solo Administradores) -->
+    <section id="tab-admin" class="tab-content">
+      <div class="admin-card">
+        <h3>Registrar nuevo artículo</h3>
+        <p class="admin-subtitle">Se guardará directamente en tu base de datos local.</p>
+
+        <form id="addProductForm">
+          <label>Nombre del artículo *</label>
+          <input type="text" id="newProdName" placeholder="Ej: Chaqueta de cuero" required>
+
+          <label>Descripción</label>
+          <textarea id="newProdDesc" rows="3" placeholder="Detalles, estado, talla..."></textarea>
+
+          <label>Precio en Euros (€) *</label>
+          <input type="number" step="0.01" id="newProdPrice" placeholder="Ej: 19.99" required>
+
+          <button type="submit" class="btn-submit">Continuar registro en Bot ➡️</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
